@@ -1,0 +1,126 @@
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+<!--    <script type="text/javascript" src="JsToJ.js"></script>-->
+    <title>
+        js调用java
+    </title>
+</head>
+
+<body>
+<p id="show">
+
+</p>
+<p id="init">
+
+</p>
+<p>
+    <input type="text" id="text1" value="username"/>
+</p>
+<p>
+    <input type="text" id="text2" value="password"/>
+</p>
+<p>
+    <input type="button" id="enter" value="请求" onclick="testClick();"
+    />
+</p>
+<p>
+    <input type="button" id="enter1" value="Toast" onclick="testClick1();"
+    />
+</p>
+<p>
+    <input type="button" id="enter3" value="循环调用" onclick="testClick2();"
+    />
+</p>
+</body>
+<script>
+
+        function testClick() {
+            var str1 = document.getElementById("text1").value;
+            var str2 = document.getElementById("text2").value;
+
+            //var data = {url: 'www.baidu.com', userName: str1, passwd: str2};
+            var data = '{"name":"a","age":18,"gender":"F"}'
+            window.JsToJ.callHandler('request',
+                data
+                , function(responseData) {
+
+                    console.log('native return->'+responseData);
+                }
+            );
+        }
+
+        function testClick1() {
+            //call native method
+            window.JsToJ.callHandler(
+                'toast'
+                , {'msg': '123'}
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                }
+            );
+        }
+
+        function testClick2() {
+            var i = 0;
+            var first = setInterval(function(){
+                //call native method
+                window.JsToJ.callHandler(
+                    'toast'
+                    , {'msg': '223'}
+                    , function(responseData) {
+                        console.log('return->['+ i++ +']'+responseData);
+                    }
+                );
+                if(i>500){
+                    clearInterval(first);
+                }
+            }, 10);
+
+        }
+
+        function bridgeLog(logContent) {
+            document.getElementById("show").innerHTML = logContent;
+        }
+
+        function connectJsToJ(callback) {
+            if (window.JsToJ) {
+                callback(JsToJ);
+            } else {
+                document.addEventListener(
+                    'JsToJReady'
+                    , function() {
+                        callback(JsToJ)
+                    },
+                    false
+                );
+            }
+        }
+
+        connectJsToJ(function(bridge) {
+            bridge.init(function(message, responseCallback) {
+                console.log('JS got a message', message);
+                var data = {
+                    'Javascript Responds': '345!'
+                };
+
+                if (responseCallback) {
+                    console.log('JS responding with', data);
+                    responseCallback(data);
+                }
+            });
+
+            bridge.registerHandler("functionInJs", function(data, responseCallback) {
+                console.log(data);
+                document.getElementById("show").innerHTML = ("data from Java: = " + data);
+                if (responseCallback) {
+                    var responseData = "I am from Javascript";
+                    responseCallback(responseData);
+                }
+            });
+        })
+
+</script>
+
+</html>
+
