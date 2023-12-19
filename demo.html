@@ -1,7 +1,9 @@
 <html>
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="content-type" />
-<!--    <script type="text/javascript" src="JsToJ.js"></script>-->
+<!--    <script type="text/javascript" src="BarCode.js"></script>-->
+    <script type="text/javascript" src="su/BarTools.js"></script>
+    <script type="text/javascript" src="su/BarCode.js"></script>
     <title>
         js调用java
     </title>
@@ -14,94 +16,157 @@
 <p id="init">
 
 </p>
+
+
 <p>
-    <input type="text" id="text1" value="username"/>
-</p>
-<p>
-    <input type="text" id="text2" value="password"/>
-</p>
-<p>
-    <input type="button" id="enter" value="请求" onclick="testClick();"
+    <input type="button" id="enter1" value="打开声音" onclick="test1Click();"
     />
 </p>
 <p>
-    <input type="button" id="enter1" value="Toast" onclick="testClick1();"
+    <input type="button" id="enter11" value="关闭声音" onclick="test11Click();"
+    />
+</p>
+
+
+<p>
+    <input type="button" id="enter2" value="开启震动" onclick="test2Click();"
     />
 </p>
 <p>
-    <input type="button" id="enter3" value="循环调用" onclick="testClick2();"
+    <input type="button" id="enter22" value="关闭震动" onclick="test22Click();"
+    />
+</p>
+<p>
+    <input type="button" id="enter3" value="打开128支持" onclick="test3Click();"
+    />
+</p>
+<p>
+    <input type="button" id="enter33" value="关闭128支持" onclick="test33Click();"
+    />
+</p>
+<p>
+    <input type="button" id="enter4" value="打开QR支持" onclick="test4Click();"
+    />
+</p>
+<p>
+    <input type="button" id="enter44" value="关闭QR支持" onclick="test44Click();"
     />
 </p>
 </body>
 <script>
-
-        function testClick() {
-            var str1 = document.getElementById("text1").value;
-            var str2 = document.getElementById("text2").value;
-
-            //var data = {url: 'www.baidu.com', userName: str1, passwd: str2};
-            var data = '{"name":"a","age":18,"gender":"F"}'
-            window.JsToJ.callHandler('request',
-                data
-                , function(responseData) {
-
-                    console.log('native return->'+responseData);
-                }
-            );
-        }
-
-        function testClick1() {
-            //call native method
-            window.JsToJ.callHandler(
-                'toast'
-                , {'msg': '123'}
+        function test1Click() {
+            var data = '声音已打开'
+            window.BarCode.callHandler(
+                'soundOn'
+                , data
                 , function(responseData) {
                     console.log('native return->'+responseData);
                 }
             );
         }
 
-        function testClick2() {
-            var i = 0;
-            var first = setInterval(function(){
-                //call native method
-                window.JsToJ.callHandler(
-                    'toast'
-                    , {'msg': '223'}
-                    , function(responseData) {
-                        console.log('return->['+ i++ +']'+responseData);
-                    }
-                );
-                if(i>500){
-                    clearInterval(first);
+        function test11Click() {
+            var data = '声音已关闭'
+            window.BarCode.callHandler(
+                'soundOff'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
                 }
-            }, 10);
+            );
+        }
+
+        function test2Click() {
+            var data = '震动已打开'
+            window.BarCode.callHandler(
+                'vibrateOn'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                }
+            );
+        }
+
+        function test22Click() {
+            var data = '震动已关闭'
+            window.BarCode.callHandler(
+                'vibrateOff'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                }
+            );
+        }
+
+        function test3Click() {
+            var data = '128已打开'
+            window.BarCode.callHandler(
+                '128On'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                }
+            );
 
         }
 
-        function bridgeLog(logContent) {
-            document.getElementById("show").innerHTML = logContent;
+        function test33Click() {
+            var data = '128已关闭'
+            window.BarCode.callHandler(
+                '128Off'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                }
+            );
+
         }
 
-        function connectJsToJ(callback) {
-            if (window.JsToJ) {
-                callback(JsToJ);
+        function test4Click() {
+            var data = 'qr已打开'
+            window.BarCode.callHandler(
+                'QrOn'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                    document.getElementById("text4").value = responseData;
+                }
+            );
+
+        }
+        function test44Click() {
+            var data = 'qr已关闭'
+            window.BarCode.callHandler(
+                'QrOff'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                    document.getElementById("text4").value = responseData;
+                }
+            );
+
+        }
+
+
+        function connectBarCode(callback) {
+            if (window.BarCode) {
+                callback(BarCode);
             } else {
                 document.addEventListener(
-                    'JsToJReady'
+                    'BarCodeReady'
                     , function() {
-                        callback(JsToJ)
+                        callback(BarCode)
                     },
                     false
                 );
             }
         }
 
-        connectJsToJ(function(bridge) {
-            bridge.init(function(message, responseCallback) {
+        connectBarCode(function(barCodeHandler) {
+            barCodeHandler.init(function(message, responseCallback) {
                 console.log('JS got a message', message);
                 var data = {
-                    'Javascript Responds': '345!'
+                    'Javascript Responds': 'test!'
                 };
 
                 if (responseCallback) {
@@ -110,17 +175,17 @@
                 }
             });
 
-            bridge.registerHandler("functionInJs", function(data, responseCallback) {
-                console.log(data);
-                document.getElementById("show").innerHTML = ("data from Java: = " + data);
+            barCodeHandler.registerHandler("barcodeListener", function(data, responseCallback) {
+                receiveBarCode(data)
                 if (responseCallback) {
-                    var responseData = "I am from Javascript";
+                    var responseData = "Got barcode";
                     responseCallback(responseData);
                 }
             });
         })
 
 </script>
+<!--                document.getElementById("show").innerHTML = ("data from Java: = " + data);-->
 
 </html>
 
