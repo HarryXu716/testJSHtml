@@ -5,7 +5,7 @@
     <script type="text/javascript" src="su/BarTools.js"></script>
     <script type="text/javascript" src="su/BarCode.js"></script>
     <title>
-        js调用java
+        扫码demo
     </title>
 </head>
 
@@ -14,9 +14,8 @@
 
 </p>
 <p id="init">
-
+扫码结果
 </p>
-
 
 <p>
     <textarea id="myTextarea" name="textarea" cols="40" rows="20"></textarea>
@@ -137,41 +136,7 @@
         }
 
 
-        function connectBarCode(callback) {
-            if (window.BarCode) {
-                callback(BarCode);
-            } else {
-                document.addEventListener(
-                    'BarCodeReady'
-                    , function() {
-                        callback(BarCode)
-                    },
-                    false
-                );
-            }
-        }
-
-        connectBarCode(function(barCodeHandler) {
-            barCodeHandler.init(function(message, responseCallback) {
-                console.log('JS got a message', message);
-                var data = {
-                    'Javascript Responds': 'test!'
-                };
-
-                if (responseCallback) {
-                    console.log('JS responding with', data);
-                    responseCallback(data);
-                }
-            });
-
-            barCodeHandler.registerHandler("barcodeListener", function(data, responseCallback) {
-                receiveBarCode(data);
-                if (responseCallback) {
-                    var responseData = "Got barcode";
-                    responseCallback(responseData);
-                }
-            });
-        })
+        Su.enable()
 
 
 </script>
