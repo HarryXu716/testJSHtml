@@ -1,10 +1,14 @@
 <html>
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <!--    <script type="text/javascript" src="BarCode.js"></script>-->
     <script type="text/javascript" src="su/BarTools.js"></script>
     <script type="text/javascript" src="su/BarCode.js"></script>
-    <script type="text/javascript" src="su/Su.js"></script>
+    <title>
+        js调用java
+    </title>
 </head>
+
 <body>
 <p id="show">
 
@@ -12,32 +16,26 @@
 <p id="init">
 
 </p>
+
+
 <p>
     <textarea id="myTextarea" name="textarea" cols="40" rows="20"></textarea>
-</p>
-<p>
 </p>
 <div class="btn-group">
     <li class="active">声音</li>
     <button class="btn" onclick="test1Click();">打开</button>
     <button class="btn" onclick="test11Click();">关闭</button>
 </div>
-<p>
-</p>
 <div class="btn-group">
     <li class="active">震动</li>
     <button class="btn" onclick="test2Click();">打开</button>
     <button class="btn" onclick="test22Click();">关闭</button>
 </div>
-<p>
-</p>
 <div class="btn-group">
     <li class="active">128支持</li>
     <button class="btn" onclick="test3Click();">打开</button>
     <button class="btn" onclick="test33Click();">关闭</button>
 </div>
-<p>
-</p>
 <div class="btn-group">
     <li class="active">QR支持</li>
     <button class="btn" onclick="test4Click();">打开</button>
@@ -45,27 +43,10 @@
 </div>
 </body>
 <script>
-        function test(){
-        	var date=new Date();
-        	var year=date.getFullYear();
-        	var month=date.getMonth()+1;
-        	month=month<10?"0"+month:month;
-        	var day=date.getDate();
-        	day=day<10?"0"+day:day;
-        	var hour=date.getHours();
-        	hour=hour<10?"0"+hour:hour;
-        	var minute=date.getMinutes();
-        	minute=minute<10?"0"+minute:minute;
-        	var second=date.getSeconds();
-        	second=second<10?"0"+second:second;
-        	var current=month+"-"+day+" "+hour+":"+minute+":"+second;
-        	console.log(current);
-        	return current;
-        }
-
         function test1Click() {
             var data = '声音已打开'
-            Su.callFunction('soundOn'
+            window.BarCode.callHandler(
+                'soundOn'
                 , data
                 , function(responseData) {
                     console.log('native return->'+responseData);
@@ -75,7 +56,8 @@
 
         function test11Click() {
             var data = '声音已关闭'
-            Su.callFunction('soundOff'
+            window.BarCode.callHandler(
+                'soundOff'
                 , data
                 , function(responseData) {
                     console.log('native return->'+responseData);
@@ -85,7 +67,7 @@
 
         function test2Click() {
             var data = '震动已打开'
-            Su.callFunction(
+            window.BarCode.callHandler(
                 'vibrateOn'
                 , data
                 , function(responseData) {
@@ -96,7 +78,7 @@
 
         function test22Click() {
             var data = '震动已关闭'
-           Su.callFunction(
+            window.BarCode.callHandler(
                 'vibrateOff'
                 , data
                 , function(responseData) {
@@ -107,7 +89,7 @@
 
         function test3Click() {
             var data = '128已打开'
-            Su.callFunction(
+            window.BarCode.callHandler(
                 '128On'
                 , data
                 , function(responseData) {
@@ -119,7 +101,7 @@
 
         function test33Click() {
             var data = '128已关闭'
-            Su.callFunction(
+            window.BarCode.callHandler(
                 '128Off'
                 , data
                 , function(responseData) {
@@ -131,63 +113,66 @@
 
         function test4Click() {
             var data = 'qr已打开'
-            Su.callFunction(
+            window.BarCode.callHandler(
                 'QrOn'
                 , data
                 , function(responseData) {
                     console.log('native return->'+responseData);
+                    document.getElementById("text4").value = responseData;
                 }
             );
 
         }
         function test44Click() {
             var data = 'qr已关闭'
-
-            Su.callFunction(
+            window.BarCode.callHandler(
                 'QrOff'
                 , data
                 , function(responseData) {
                     console.log('native return->'+responseData);
+                    document.getElementById("text4").value = responseData;
                 }
             );
 
         }
 
 
-        var codeString = "--- 扫码结果 ---";
-        function receiveBarCode(barcode) {
-            var returnVal = test();
-            codeString = returnVal+" - "+barcode+"\n"+codeString
-            document.getElementById("myTextarea").value = codeString;
+        function connectBarCode(callback) {
+            if (window.BarCode) {
+                callback(BarCode);
+            } else {
+                document.addEventListener(
+                    'BarCodeReady'
+                    , function() {
+                        callback(BarCode)
+                    },
+                    false
+                );
+            }
         }
-        Su.enable()
-//        function receiveBarCode(barcode) {
-//            //document.getElementById("show").innerHTML = barcode;
-//           document.getElementById("myTextarea").value = barcode;
-//        }
-//
-//
-//        Su.connectBarCode(function(barCodeHandler) {
-//           barCodeHandler.init(function(message, responseCallback) {
-//               console.log('JS got a message', message);
-//               var data = {
-//                   'Javascript Responds': 'test!'
-//               };
-//
-//               if (responseCallback) {
-//                   console.log('JS responding with', data);
-//                   responseCallback(data);
-//               }
-//           });
-//
-//           barCodeHandler.registerHandler("barcodeListener", function(data, responseCallback) {
-//               receiveBarCode(data)
-//
-//               if (responseCallback) {
-//                   var responseData = "Got barcode";
-//                   responseCallback(responseData);
-//               }
-//           });
-//       })
+
+        connectBarCode(function(barCodeHandler) {
+            barCodeHandler.init(function(message, responseCallback) {
+                console.log('JS got a message', message);
+                var data = {
+                    'Javascript Responds': 'test!'
+                };
+
+                if (responseCallback) {
+                    console.log('JS responding with', data);
+                    responseCallback(data);
+                }
+            });
+
+            barCodeHandler.registerHandler("barcodeListener", function(data, responseCallback) {
+                receiveBarCode(data)
+                if (responseCallback) {
+                    var responseData = "Got barcode";
+                    responseCallback(responseData);
+                }
+            });
+        })
+
 </script>
+
 </html>
