@@ -145,13 +145,14 @@
 
         }
 
-        Su.enable();
+
         var codeString = "--- 扫码结果 ---";
         function receiveBarCode(barcode) {
             var returnVal = test();
             codeString = returnVal+" - "+barcode+"\n"+codeString
             document.getElementById("myTextarea").value = codeString;
         }
+        Su.enable()
 //        function receiveBarCode(barcode) {
 //            //document.getElementById("show").innerHTML = barcode;
 //           document.getElementById("myTextarea").value = barcode;
