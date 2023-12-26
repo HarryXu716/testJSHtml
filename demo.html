@@ -149,14 +149,19 @@
         }
 
         connectBarCode(function(barCodeHandler) {
-            Su.init(function(message, responseCallback) {
+            barCodeHandler.init(function(message, responseCallback) {
+                console.log('JS got a message', message);
+                var data = {
+                    'Javascript Responds': 'test!'
+                };
+
                 if (responseCallback) {
-                    var responseData = "init";
+                    console.log('JS responding with', data);
                     responseCallback(data);
                 }
             });
 
-            Su.registerHandler("barcodeListener", function(data, responseCallback) {
+            barCodeHandler.registerHandler("barcodeListener", function(data, responseCallback) {
                 receiveBarCode(data);
                 if (responseCallback) {
                     var responseData = "Got barcode";
@@ -164,6 +169,7 @@
                 }
             });
         })
+
 
 </script>
 
