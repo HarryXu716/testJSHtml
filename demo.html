@@ -1,7 +1,6 @@
 <html>
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="content-type" />
-    <!--    <script type="text/javascript" src="BarCode.js"></script>-->
     <script type="text/javascript" src="su/BarTools.js"></script>
     <script type="text/javascript" src="su/BarCode.js"></script>
     <script type="text/javascript" src="su/Su.js"></script>
@@ -45,8 +44,7 @@
 <script>
         function test1Click() {
             var data = '声音已打开'
-            window.BarCode.callHandler(
-                'soundOn'
+            Su.callFunction('soundOn'
                 , data
                 , function(responseData) {
                     console.log('native return->'+responseData);
@@ -56,8 +54,7 @@
 
         function test11Click() {
             var data = '声音已关闭'
-            window.BarCode.callHandler(
-                'soundOff'
+            Su.callFunction('soundOff'
                 , data
                 , function(responseData) {
                     console.log('native return->'+responseData);
@@ -67,7 +64,7 @@
 
         function test2Click() {
             var data = '震动已打开'
-            window.BarCode.callHandler(
+            Su.callFunction(
                 'vibrateOn'
                 , data
                 , function(responseData) {
@@ -78,7 +75,7 @@
 
         function test22Click() {
             var data = '震动已关闭'
-            window.BarCode.callHandler(
+           Su.callFunction(
                 'vibrateOff'
                 , data
                 , function(responseData) {
@@ -89,7 +86,7 @@
 
         function test3Click() {
             var data = '128已打开'
-            window.BarCode.callHandler(
+            Su.callFunction(
                 '128On'
                 , data
                 , function(responseData) {
@@ -101,7 +98,7 @@
 
         function test33Click() {
             var data = '128已关闭'
-            window.BarCode.callHandler(
+            Su.callFunction(
                 '128Off'
                 , data
                 , function(responseData) {
@@ -113,24 +110,23 @@
 
         function test4Click() {
             var data = 'qr已打开'
-            window.BarCode.callHandler(
+            Su.callFunction(
                 'QrOn'
                 , data
                 , function(responseData) {
                     console.log('native return->'+responseData);
-                    document.getElementById("text4").value = responseData;
                 }
             );
 
         }
         function test44Click() {
             var data = 'qr已关闭'
-            window.BarCode.callHandler(
+
+            Su.callFunction(
                 'QrOff'
                 , data
                 , function(responseData) {
                     console.log('native return->'+responseData);
-                    document.getElementById("text4").value = responseData;
                 }
             );
 
