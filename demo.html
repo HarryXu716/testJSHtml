@@ -142,7 +142,7 @@
             });
 
             barCodeHandler.registerHandler("barcodeListener", function(data, responseCallback) {
-                receiveBarCode(data)
+                receiveBarCode(data);
                 if (responseCallback) {
                     var responseData = "Got barcode";
                     responseCallback(responseData);
