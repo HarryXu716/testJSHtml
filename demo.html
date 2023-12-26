@@ -43,7 +43,7 @@
 </body>
 <script>
         function test1Click() {
-            var data = '声音已打开'
+            var data = '声音已打开';
             Su.callFunction('soundOn'
                 , data
                 , function(responseData) {
@@ -53,7 +53,7 @@
         }
 
         function test11Click() {
-            var data = '声音已关闭'
+            var data = '声音已关闭';
             Su.callFunction('soundOff'
                 , data
                 , function(responseData) {
@@ -63,7 +63,7 @@
         }
 
         function test2Click() {
-            var data = '震动已打开'
+            var data = '震动已打开';
             Su.callFunction(
                 'vibrateOn'
                 , data
@@ -74,7 +74,7 @@
         }
 
         function test22Click() {
-            var data = '震动已关闭'
+            var data = '震动已关闭';
            Su.callFunction(
                 'vibrateOff'
                 , data
@@ -85,7 +85,7 @@
         }
 
         function test3Click() {
-            var data = '128已打开'
+            var data = '128已打开';
             Su.callFunction(
                 '128On'
                 , data
@@ -97,7 +97,7 @@
         }
 
         function test33Click() {
-            var data = '128已关闭'
+            var data = '128已关闭';
             Su.callFunction(
                 '128Off'
                 , data
@@ -109,7 +109,7 @@
         }
 
         function test4Click() {
-            var data = 'qr已打开'
+            var data = 'qr已打开';
             Su.callFunction(
                 'QrOn'
                 , data
@@ -121,7 +121,7 @@
         }
 
         function test44Click() {
-            var data = 'qr已关闭'
+            var data = 'qr已关闭';
 
             Su.callFunction(
                 'QrOff'
@@ -133,15 +133,30 @@
 
         }
 
-        Su.enable(function(barCodeHandler) {
-            barCodeHandler.init(function(message, responseCallback) {
+
+        function connectBarCode(callback) {
+            if (window.BarCode) {
+                callback(BarCode);
+            } else {
+                document.addEventListener(
+                    'BarCodeReady'
+                    , function() {
+                        callback(BarCode)
+                    },
+                    false
+                );
+            }
+        }
+
+        connectBarCode(function(barCodeHandler) {
+            Su.init(function(message, responseCallback) {
                 if (responseCallback) {
                     var responseData = "init";
                     responseCallback(data);
                 }
             });
 
-            barCodeHandler.registerHandler("barcodeListener", function(data, responseCallback) {
+            Su.registerHandler("barcodeListener", function(data, responseCallback) {
                 receiveBarCode(data);
                 if (responseCallback) {
                     var responseData = "Got barcode";
