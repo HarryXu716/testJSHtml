@@ -119,6 +119,7 @@
             );
 
         }
+
         function test44Click() {
             var data = 'qr已关闭'
 
@@ -132,9 +133,22 @@
 
         }
 
+        Su.enable(function(barCodeHandler) {
+            barCodeHandler.init(function(message, responseCallback) {
+                if (responseCallback) {
+                    var responseData = "init";
+                    responseCallback(data);
+                }
+            });
 
-        Su.enable()
-
+            barCodeHandler.registerHandler("barcodeListener", function(data, responseCallback) {
+                receiveBarCode(data)
+                if (responseCallback) {
+                    var responseData = "Got barcode";
+                    responseCallback(responseData);
+                }
+            });
+        })
 
 </script>
 
