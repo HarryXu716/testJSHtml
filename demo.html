@@ -40,6 +40,41 @@
     <button class="btn" onclick="test4Click();">打开</button>
     <button class="btn" onclick="test44Click();">关闭</button>
 </div>
+
+<div class="btn-group">
+    <li class="active">MSI支持</li>
+    <button class="btn" onclick="test5Click();">打开</button>
+    <button class="btn" onclick="test55Click();">关闭</button>
+</div>
+
+<div class="btn-group">
+    <li class="active">ChinaPost支持</li>
+    <button class="btn" onclick="test6Click();">打开</button>
+    <button class="btn" onclick="test66Click();">关闭</button>
+</div>
+
+<div class="btn-group">
+    <li class="active">MaxiCode支持</li>
+    <button class="btn" onclick="test7Click();">打开</button>
+    <button class="btn" onclick="test77Click();">关闭</button>
+</div>
+
+<div class="btn-group">
+    <li class="active">rfid连接</li>
+    <button class="btn" onclick="test211Click();">连接</button>
+    <button class="btn" onclick="test212Click();">断开</button>
+</div>
+<div class="btn-group">
+    <li class="active">rfid寻卡</li>
+    <button class="btn" onclick="test213Click();">单次寻卡</button>
+    <button class="btn" onclick="test214Click();">连续寻卡</button>
+    <button class="btn" onclick="test215Click();">停止寻卡</button>
+</div>
+<div class="btn-group">
+    <li class="active">rfid设置功率</li>
+    <button class="btn" onclick="test216Click(5);">设置功率为5</button>
+    <button class="btn" onclick="test216Click(33);">设置功率为33</button>
+</div>
 </body>
 <script>
         function test1Click() {
@@ -125,6 +160,156 @@
 
             Su.callFunction(
                 'QrOff'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                }
+            );
+
+        }
+        function test5Click() {
+            var data = 'Msi已打开';
+            Su.callFunction(
+                'MsiOn'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                }
+            );
+
+        }
+
+        function test55Click() {
+            var data = 'Msi已关闭';
+
+            Su.callFunction(
+                'MsiOff'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                }
+            );
+
+        }
+
+        function test6Click() {
+            var data = 'ChinaPost已打开';
+            Su.callFunction(
+                'ChinaPostOn'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                }
+            );
+
+        }
+
+        function test66Click() {
+            var data = 'ChinaPost已关闭';
+
+            Su.callFunction(
+                'ChinaPostOff'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                }
+            );
+
+        }
+
+        function test7Click() {
+            var data = 'MaxiCode已打开';
+            Su.callFunction(
+                'MaxiCodeOn'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                }
+            );
+
+        }
+
+        function test77Click() {
+            var data = 'MaxiCode已关闭';
+
+            Su.callFunction(
+                'MaxiCodeOff'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                }
+            );
+
+        }
+
+
+        function test211Click() {
+            var data = 'rfid连接';
+            Su.callFunction(
+                'RfidConnect'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                }
+            );
+
+        }
+
+        function test212Click() {
+            var data = 'rfid断开';
+
+            Su.callFunction(
+                'RfidDisconnect'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                }
+            );
+
+        }
+
+        function test213Click() {
+            var data = 'rfid扫码一次';
+            Su.callFunction(
+                'RfidScanOnce'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                }
+            );
+
+        }
+
+        function test214Click() {
+            var data = 'rfid连续扫码';
+            Su.callFunction(
+                'RfidScanOn'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                }
+            );
+
+        }
+
+        function test215Click() {
+            var data = 'rfid停止扫码';
+
+            Su.callFunction(
+                'RfidScanOff'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                }
+            );
+
+        }
+
+        function test216Click(var num) {
+            var data = num;
+
+            Su.callFunction(
+                'RfidSetPower'
                 , data
                 , function(responseData) {
                     console.log('native return->'+responseData);
