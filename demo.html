@@ -1,81 +1,155 @@
-<html>
+<!DOCTYPE html>
 <head>
+    <meta charset="UTF-8">
     <meta content="text/html; charset=utf-8" http-equiv="content-type" />
     <script type="text/javascript" src="su/BarTools.js"></script>
     <script type="text/javascript" src="su/BarCode.js"></script>
     <script type="text/javascript" src="su/Su.js"></script>
-    <title>
-        扫码demo
-    </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 3px 0;
+            text-align: center;
+        }
+        .navigation {
+             display: flex;
+             background-color: #333;
+        }
+        .left {
+            flex: 1; /* 左边栏占据剩余空间的1/3 */
+            background-color: #f9f9f9; /* 左边栏背景色 */
+            padding: 2px;
+            margin-bottom: 1px;
+        }
+
+        .right {
+            flex: 2; /* 右边栏占据剩余空间的2/3 */
+            background-color: #ddd; /* 右边栏背景色 */
+            padding: 2px;
+            margin-bottom: 1px;
+        }
+        .content {
+            text-align: center;
+            margin: 2px;
+            padding: 2px;
+        }
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
-
 <body>
-<p id="show">
 
-</p>
-<p id="init">
-扫码结果
-</p>
-
-<p>
-    <textarea id="myTextarea" name="textarea" cols="40" rows="20"></textarea>
-</p>
-<div class="btn-group">
-    <li class="active">声音</li>
-    <button class="btn" onclick="test1Click();">打开</button>
-    <button class="btn" onclick="test11Click();">关闭</button>
-</div>
-<div class="btn-group">
-    <li class="active">震动</li>
-    <button class="btn" onclick="test2Click();">打开</button>
-    <button class="btn" onclick="test22Click();">关闭</button>
-</div>
-<div class="btn-group">
-    <li class="active">128支持</li>
-    <button class="btn" onclick="test3Click();">打开</button>
-    <button class="btn" onclick="test33Click();">关闭</button>
-</div>
-<div class="btn-group">
-    <li class="active">QR支持</li>
-    <button class="btn" onclick="test4Click();">打开</button>
-    <button class="btn" onclick="test44Click();">关闭</button>
+<div class="header">
+    <h1>扫码结果</h1>
 </div>
 
-<div class="btn-group">
-    <li class="active">MSI支持</li>
-    <button class="btn" onclick="test5Click();">打开</button>
-    <button class="btn" onclick="test55Click();">关闭</button>
+<div class="navigation">
+
+    <div class="left">
+        <p>QR码支持</p>
+        <div class="btn-group">
+            <li class="active">声音</li>
+            <button class="btn" onclick="test1Click();">打开</button>
+            <button class="btn" onclick="test11Click();">关闭</button>
+        </div>
+        <div class="btn-group">
+            <li class="active">震动</li>
+            <button class="btn" onclick="test2Click();">打开</button>
+            <button class="btn" onclick="test22Click();">关闭</button>
+        </div>
+        <div class="btn-group">
+            <li class="active">128支持</li>
+            <button class="btn" onclick="test3Click();">打开</button>
+            <button class="btn" onclick="test33Click();">关闭</button>
+        </div>
+        <div class="btn-group">
+            <li class="active">QR支持</li>
+            <button class="btn" onclick="test4Click();">打开</button>
+            <button class="btn" onclick="test44Click();">关闭</button>
+        </div>
+
+        <div class="btn-group">
+            <li class="active">MSI支持</li>
+            <button class="btn" onclick="test5Click();">打开</button>
+            <button class="btn" onclick="test55Click();">关闭</button>
+        </div>
+
+        <div class="btn-group">
+            <li class="active">ChinaPost支持</li>
+            <button class="btn" onclick="test6Click();">打开</button>
+            <button class="btn" onclick="test66Click();">关闭</button>
+        </div>
+
+        <div class="btn-group">
+            <li class="active">MaxiCode支持</li>
+            <button class="btn" onclick="test7Click();">打开</button>
+            <button class="btn" onclick="test77Click();">关闭</button>
+        </div>
+
+    </div>
+
+
+    <div class="right">
+        <p>RFID支持</p>
+
+        <div class="btn-group">
+            <li class="active">rfid连接</li>
+            <button class="btn" onclick="test211Click();">连接</button>
+            <button class="btn" onclick="test212Click();">断开</button>
+        </div>
+        <div class="btn-group">
+            <li class="active">rfid寻卡</li>
+            <button class="btn" onclick="test213Click();">单次寻卡</button>
+            <button class="btn" onclick="test214Click();">连续寻卡</button>
+            <button class="btn" onclick="test215Click();">停止寻卡</button>
+        </div>
+        <div class="btn-group">
+            <li class="active">rfid设置功率</li>
+            <button class="btn" onclick="test216Click(5);">设置功率为5</button>
+            <button class="btn" onclick="test216Click(33);">设置功率为33</button>
+        </div>
+
+        <div class="btn-group">
+            <li class="active">rfid设置寻卡速度</li>
+            <button class="btn" onclick="test217Click(0);">快</button>
+            <button class="btn" onclick="test217Click(1);">慢</button>
+        </div>
+
+        <div class="btn-group">
+            <li class="active">rfid寻卡前清空EPC</li>
+            <button class="btn" onclick="test218Click(0);">关闭</button>
+            <button class="btn" onclick="test218Click(1);">打开</button>
+        </div>
+    </div>
+
 </div>
 
-<div class="btn-group">
-    <li class="active">ChinaPost支持</li>
-    <button class="btn" onclick="test6Click();">打开</button>
-    <button class="btn" onclick="test66Click();">关闭</button>
+<div class="content">
+    <p>
+        <textarea id="myTextarea" name="textarea" cols="60" rows="20"></textarea>
+    </p>
 </div>
 
-<div class="btn-group">
-    <li class="active">MaxiCode支持</li>
-    <button class="btn" onclick="test7Click();">打开</button>
-    <button class="btn" onclick="test77Click();">关闭</button>
+<div class="footer">
+    <p>工业浏览器demo</p>
 </div>
 
-<div class="btn-group">
-    <li class="active">rfid连接</li>
-    <button class="btn" onclick="test211Click();">连接</button>
-    <button class="btn" onclick="test212Click();">断开</button>
-</div>
-<div class="btn-group">
-    <li class="active">rfid寻卡</li>
-    <button class="btn" onclick="test213Click();">单次寻卡</button>
-    <button class="btn" onclick="test214Click();">连续寻卡</button>
-    <button class="btn" onclick="test215Click();">停止寻卡</button>
-</div>
-<div class="btn-group">
-    <li class="active">rfid设置功率</li>
-    <button class="btn" onclick="test216Click(5);">设置功率为5</button>
-    <button class="btn" onclick="test216Click(33);">设置功率为33</button>
-</div>
 </body>
+
 <script>
         function test1Click() {
             var data = '声音已打开';
@@ -317,6 +391,30 @@
             );
 
         }
+        function test217Click(num) {
+            var data = num;
+
+            Su.callFunction(
+                'RfidSpeed'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                }
+            );
+
+        }
+        function test218Click(num) {
+            var data = num;
+
+            Su.callFunction(
+                'RfidClearEpclist'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                }
+            );
+
+        }
 
 
         function connectBarCode(callback) {
@@ -357,5 +455,4 @@
 
 
 </script>
-
 </html>
