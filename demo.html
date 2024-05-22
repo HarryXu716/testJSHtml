@@ -124,6 +124,13 @@
             <button class="btn" onclick="test218Click(0);">关闭</button>
             <button class="btn" onclick="test218Click(1);">打开</button>
         </div>
+        <div class="btn-group">
+            <li class="active">rfid设置Session</li>
+            <button class="btn" onclick="test219Click(0);">S0</button>
+            <button class="btn" onclick="test219Click(1);">S1</button>
+            <button class="btn" onclick="test219Click(2);">S2</button>
+            <button class="btn" onclick="test219Click(3);">S3</button>
+        </div>
     </div>
 
 </div>
@@ -394,6 +401,18 @@
 
             Su.callFunction(
                 'RfidClearEpclist'
+                , data
+                , function(responseData) {
+                    console.log('native return->'+responseData);
+                }
+            );
+
+        }
+        function test219Click(num) {
+            var data = num;
+
+            Su.callFunction(
+                'RfidSession'
                 , data
                 , function(responseData) {
                     console.log('native return->'+responseData);
